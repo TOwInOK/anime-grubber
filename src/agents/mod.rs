@@ -1,1 +1,3 @@
-pub mod vailfu;
+//! List of avaiable agents
+/// [Vaifu.pics api represintation](https://waifu.pics/docs)
+pub mod vailfupics;

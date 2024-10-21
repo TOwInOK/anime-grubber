@@ -2,7 +2,7 @@
 mod test {
     use anime_grubber::{
         agent::Agent,
-        agents::vailfu::{Categories, Faifu, SFW},
+        agents::vailfupics::{Categories, Faifu, SFW},
         url,
     };
     use std::sync::LazyLock;

@@ -25,7 +25,7 @@ jobs:
       run: rustup toolchain install stable --profile minimal --no-self-update
 
     - name: Job
-      run: cargo build --locked
+      run: cargo build
        
   Clippy:
     needs: 

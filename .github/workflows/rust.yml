@@ -44,7 +44,7 @@ jobs:
         run: rustup toolchain install stable --profile minimal --no-self-update
           
       - name: Job
-        run: cargo clippy --all-targets --locked -- -D warnings
+        run: cargo clippy --all-targets   -- -D warnings
       
   Doc-check:
     needs: 
@@ -63,7 +63,7 @@ jobs:
         run: rustup toolchain install stable --profile minimal --no-self-update
           
       - name: Job
-        run: cargo test -F full --doc --locked
+        run: cargo test -F full --doc 
 
   Lib-check:
     needs: 
@@ -82,7 +82,7 @@ jobs:
         run: rustup toolchain install stable --profile minimal --no-self-update
         
       - name: Job
-        run: cargo test -p anime-grubber --lib --locked
+        run: cargo test -p anime-grubber --lib  
 
   Lib-and-Tests-check:
     needs: 

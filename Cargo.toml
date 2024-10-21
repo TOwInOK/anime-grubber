@@ -1,0 +1,18 @@
+[package]
+name = "like-prety-pictures"
+version = "0.0.1"
+edition = "2021"
+authors = ["TOwInOK <60252419+TOwInOK@users.noreply.github.com>"]
+description = "This crate provide fetching some cute girls (or not) by your response"
+
+[dependencies]
+async-trait = "0.1.83"
+miniserde = "0.1.40"
+reqwest = { version = "0.12.8", features = ["json"] }
+thiserror = "1.0.64"
+tracing = "0.1.40"
+url = "2.5.2"
+
+[dev-dependencies]
+mockito = "1.5.0"
+tokio = { version = "1.40.0", features = ["full"] }

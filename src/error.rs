@@ -8,6 +8,4 @@ pub enum Error {
     Reqwest(#[from] reqwest::Error),
     #[error("Desirialise error")]
     MiniSerde(#[from] miniserde::Error),
-    #[error("Fali to parse url")]
-    FailParseUrl(#[from] url::ParseError),
 }

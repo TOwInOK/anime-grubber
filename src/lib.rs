@@ -1,4 +1,6 @@
 pub mod agent;
 pub mod agents;
 pub mod error;
-pub mod result;
+mod gen_enum;
+mod gen_url;
+mod result;

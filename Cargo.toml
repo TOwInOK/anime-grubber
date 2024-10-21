@@ -1,18 +1,25 @@
 [package]
-name = "like-prety-pictures"
+name = "anime-grubber"
 version = "0.0.1"
 edition = "2021"
 authors = ["TOwInOK <60252419+TOwInOK@users.noreply.github.com>"]
-description = "This crate provide fetching some cute girls (or not) by your response"
+description = "A convenient library for extracting images of cute characters from websites."
+license = "MIT"
+repository = "https://github.com/TOwInOK/anime-grubber"
+homepage = "https://github.com/TOwInOK/anime-grubber"
+documentation = "https://docs.rs/anime-grubber"
+readme = "README.md"
+keywords = ["anime", "image", "fetch", "cute", "media", "web", "scrape"]
+categories = ["media", "web-programming", "asynchronous", "parsing"]
 
 [dependencies]
 async-trait = "0.1.83"
 miniserde = "0.1.40"
-reqwest = { version = "0.12.8", features = ["json"] }
+reqwest = "0.12.8"
 thiserror = "1.0.64"
 tracing = "0.1.40"
-url = "2.5.2"
 
 [dev-dependencies]
-mockito = "1.5.0"
+anyhow = "1.0.90"
 tokio = { version = "1.40.0", features = ["full"] }
+tracing-subscriber = "0.3.18"

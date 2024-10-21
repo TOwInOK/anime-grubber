@@ -12,6 +12,10 @@
 - Встроенные агенты для работы с популярными API (например, Waifu.pics).
 - Логирование событий для отладки и отслеживания процесса загрузки медиа.
 
+## Агенты
+
+- [Vaifu.pics](https://waifu.pics/docs)
+
 ## Установка
 
 Пропишите в консоль:
@@ -31,7 +35,7 @@ anime-grubber = "0"
 ## Использование
 
 ```rust
-use anime_grubber::agents::vailfu::{Faifu, Categories, SFW};
+use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -49,7 +53,7 @@ async fn main() -> anyhow::Result<()> {
 Этот пример показывает, как можно получить одно изображение из категории **SFW::Dance**:
 
 ```rust
-use anime_grubber::agents::vailfu::{Faifu, Categories, SFW};
+use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
 use tracing::info;
 
 #[tokio::main]
@@ -66,7 +70,7 @@ async fn main() -> anyhow::Result<()> {
 Получение сразу нескольких изображений из той же категории:
 
 ```rust
-use anime_grubber::agents::vailfu::{Faifu, Categories, SFW};
+use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
 use tracing::info;
 
 #[tokio::main]

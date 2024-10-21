@@ -1,4 +1,7 @@
 # anime-grubber
+[![Crates.io](https://img.shields.io/crates/v/anime-grubber.svg)](https://crates.io/crates/anime-grubber)
+[![Documentation]( https://img.shields.io/badge/docs-doc.rs-red)](https://docs.rs/anime-grubber)
+[![License](https://img.shields.io/crates/l/anime-grubber.svg)](LICENSE)
 удобная библиотека для извлечения изображений милых (или не совсем) персонажей с веб-сайтов.
 
 ## Возможности

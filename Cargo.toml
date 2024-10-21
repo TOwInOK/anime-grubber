@@ -23,3 +23,15 @@ tracing = "0.1.40"
 anyhow = "1.0.90"
 tokio = { version = "1.40.0", features = ["full"] }
 tracing-subscriber = "0.3.18"
+
+
+[profile.dev]
+opt-level = 1
+debug = true
+
+[profile.release]
+strip = true
+opt-level = 3
+lto = true
+debug = false
+panic = "unwind"

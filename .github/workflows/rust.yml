@@ -63,7 +63,7 @@ jobs:
         run: rustup toolchain install stable --profile minimal --no-self-update
           
       - name: Job
-        run: cargo test -F full --doc 
+        run: cargo test --doc 
 
   Lib-check:
     needs: 

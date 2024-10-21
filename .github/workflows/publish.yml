@@ -17,9 +17,6 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Build project
-        run: cargo build --release
-
       - name: Publish to crates.io
         env:
           CARGO_TOKEN: ${{ secrets.CARGO_TOKEN }}

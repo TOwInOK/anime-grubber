@@ -9,8 +9,8 @@ repository = "https://github.com/TOwInOK/anime-grubber"
 homepage = "https://github.com/TOwInOK/anime-grubber"
 documentation = "https://docs.rs/anime-grubber"
 readme = "README.md"
-keywords = ["anime", "image", "fetch", "cute", "media", "web", "scrape"]
-categories = ["media", "web-programming", "asynchronous", "parsing"]
+keywords = ["anime", "image", "gif", "fetch"]
+categories = ["api-bindings", "web-programming"]
 
 [dependencies]
 async-trait = "0.1.83"

@@ -35,11 +35,11 @@ anime-grubber = "0"
 ## Использование
 
 ```rust
-use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let instance = Faifu::new(Categories::SFW(SFW::Dance));
+    let instance = Waifu::new(Categories::SFW(SFW::Dance));
     let image = instance.get().await?;
     println!("Fetched image URL: {}", image);
     Ok(())
@@ -53,12 +53,12 @@ async fn main() -> anyhow::Result<()> {
 Этот пример показывает, как можно получить одно изображение из категории **SFW::Dance**:
 
 ```rust
-use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
 use tracing::info;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let instance = Faifu::new(Categories::SFW(SFW::Dance));
+    let instance = Waifu::new(Categories::SFW(SFW::Dance));
     let image = instance.get().await?;
     info!("Fetched image URL: {}", image);
     Ok(())
@@ -70,12 +70,12 @@ async fn main() -> anyhow::Result<()> {
 Получение сразу нескольких изображений из той же категории:
 
 ```rust
-use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
 use tracing::info;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let instance = Faifu::new(Categories::SFW(SFW::Dance));
+    let instance = Waifu::new(Categories::SFW(SFW::Dance));
     let images = instance.get_many().await?;
     assert_eq!(images.len(), 30);
     info!("{:#?}", images);

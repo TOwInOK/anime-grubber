@@ -44,7 +44,7 @@
 #[macro_export]
 macro_rules! gen_enum {
     ($name:tt, [ $($variant:ident),* $(,)? ]) => {
-        #[derive(Debug)]
+        #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
         pub enum $name {
             $(
                 $variant,
@@ -61,7 +61,7 @@ macro_rules! gen_enum {
         }
     };
     ($name:tt, [ $($variant:ident($nested:ty)),* $(,)? ]) => {
-        #[derive(Debug)]
+        #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
         pub enum $name {
             $(
                 $variant($nested),

@@ -9,10 +9,10 @@ use tracing::{debug, info, instrument, trace};
 const SOLO_URL: &str = "https://api.waifu.pics";
 const MANY_URL: &str = "https://api.waifu.pics/many";
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 /// A struct representing an image-fetching agent from the [Waifu.pics API](https://waifu.pics/docs).
 ///
-/// The `Faifu` struct implements the `Agent` trait and provides methods to retrieve
+/// The `Waifu` struct implements the `Agent` trait and provides methods to retrieve
 /// images based on specified categories. It supports fetching single images, multiple images,
 /// and random images. The struct utilizes asynchronous operations for efficient network
 /// requests.
@@ -23,51 +23,51 @@ const MANY_URL: &str = "https://api.waifu.pics/many";
 /// # Example
 /// ```rust
 /// use anime_grubber::agent::Agent;
-/// use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+/// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
 ///
 /// async fn test() {
-/// let mut faifu = Faifu::new(Categories::SFW(SFW::Dance));
-/// let image_url = faifu.get().await.expect("Problem with intrnet");
-/// let many_images = faifu.get_many().await.expect("Problem with intrnet");
-/// let random_image = faifu.get_random().await.expect("Problem with intrnet");
+/// let mut Waifu = Waifu::new(Categories::SFW(SFW::Dance));
+/// let image_url = Waifu.get().await.expect("Problem with intrnet");
+/// let many_images = Waifu.get_many().await.expect("Problem with intrnet");
+/// let random_image = Waifu.get_random().await.expect("Problem with intrnet");
 /// }
 /// ```
-pub struct Faifu {
+pub struct Waifu {
     categorie: Categories,
 }
 
-impl Faifu {
-    /// Creates a new instance of `Faifu` with the specified category.
+impl Waifu {
+    /// Creates a new instance of `Waifu` with the specified category.
     ///
     /// # Parameters
     /// - `categorie`: The category of images to fetch, which can be either SFW (Safe for Work)
     ///   or NSFW (Not Safe for Work).
     ///
     /// # Returns
-    /// Returns a new `Faifu` instance.
+    /// Returns a new `Waifu` instance.
     ///
     /// # Example
     /// ```rust
-    /// use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
     ///
-    /// let faifu = Faifu::new(Categories::SFW(SFW::Dance));
+    /// let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
     /// ```
     #[instrument(skip(categorie))]
     pub fn new(categorie: Categories) -> Self {
         Self { categorie }
     }
 
-    /// Updates the category of the `Faifu` instance.
+    /// Updates the category of the `Waifu` instance.
     ///
     /// # Parameters
     /// - `categorie`: The new category of images to fetch.
     ///
     /// # Example
     /// ```rust
-    /// use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW, NSFW};
+    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW, NSFW};
     ///
-    /// let mut faifu = Faifu::new(Categories::SFW(SFW::Dance));
-    /// faifu.set_categorie(Categories::NSFW(NSFW::Neko));
+    /// let mut Waifu = Waifu::new(Categories::SFW(SFW::Dance));
+    /// Waifu.set_categorie(Categories::NSFW(NSFW::Neko));
     /// ```
     #[instrument(skip(self, categorie))]
     pub fn set_categorie(&mut self, categorie: Categories) {
@@ -95,7 +95,7 @@ impl Faifu {
 }
 
 #[async_trait]
-impl Agent for Faifu {
+impl Agent for Waifu {
     #[instrument(skip(self))]
     async fn get(&self) -> Result<String> {
         info!("Fetch data");

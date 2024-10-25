@@ -2,7 +2,7 @@
 mod test {
     use anime_grubber::{
         agent::Agent,
-        agents::vailfupics::{Categories, Faifu, SFW},
+        agents::waifu_pics::{Categories, Waifu, SFW},
         url,
     };
     use std::sync::LazyLock;
@@ -25,7 +25,7 @@ mod test {
     #[tokio::test]
     async fn check_solo() -> anyhow::Result<()> {
         LazyLock::force(&TS);
-        let instanse = Faifu::new(Categories::SFW(SFW::Dance));
+        let instanse = Waifu::new(Categories::SFW(SFW::Dance));
         let image = instanse.get().await?;
         info!("{image}");
         Ok(())
@@ -33,7 +33,7 @@ mod test {
     #[tokio::test]
     async fn check_many() -> anyhow::Result<()> {
         LazyLock::force(&TS);
-        let instanse = Faifu::new(Categories::SFW(SFW::Dance));
+        let instanse = Waifu::new(Categories::SFW(SFW::Dance));
         let images = instanse.get_many().await?;
         assert_eq!(images.len(), 30);
         info!("{:#?}", images);

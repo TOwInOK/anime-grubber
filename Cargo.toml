@@ -1,6 +1,6 @@
 [package]
 name = "anime-grubber"
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 authors = ["TOwInOK <60252419+TOwInOK@users.noreply.github.com>"]
 description = "A convenient library for extracting images of cute characters from websites."

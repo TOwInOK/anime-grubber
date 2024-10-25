@@ -16,7 +16,7 @@ pub trait Agent {
     /// Asynchronously fetches a single image based on the current category and aspect.
     ///
     /// This method constructs a URL using the category and aspect generated from
-    /// the current state of the `Faifu` instance. It performs an HTTP GET request
+    /// the current state of the `Waifu` instance. It performs an HTTP GET request
     /// to retrieve the image. If the image is not found, it returns an error.
     ///
     /// # Returns
@@ -26,12 +26,12 @@ pub trait Agent {
     /// # Example
     /// ```rust
     /// use anime_grubber::agent::Agent;
-    /// use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let faifu = Faifu::new(Categories::SFW(SFW::Dance));
-    ///     let image_url = faifu.get().await.expect("Failed to fetch image");
+    ///     let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
+    ///     let image_url = Waifu.get().await.expect("Failed to fetch image");
     ///     println!("Fetched image URL: {}", image_url);
     /// }
     /// ```
@@ -40,7 +40,7 @@ pub trait Agent {
     /// Asynchronously fetches multiple images based on the current category and aspect.
     ///
     /// This method constructs a URL using the category and aspect generated from
-    /// the current state of the `Faifu` instance. It performs an HTTP POST request
+    /// the current state of the `Waifu` instance. It performs an HTTP POST request
     /// to retrieve an array of images. If the images are not found, it returns an error.
     ///
     /// # Returns
@@ -50,12 +50,12 @@ pub trait Agent {
     /// # Example
     /// ```rust
     /// use anime_grubber::agent::Agent;
-    /// use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let faifu = Faifu::new(Categories::SFW(SFW::Dance));
-    ///     let many_images = faifu.get_many().await.expect("Failed to fetch images");
+    ///     let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
+    ///     let many_images = Waifu.get_many().await.expect("Failed to fetch images");
     ///     for image_url in many_images {
     ///         println!("Fetched image URL: {}", image_url);
     ///     }
@@ -74,12 +74,12 @@ pub trait Agent {
     /// # Example
     /// ```rust
     /// use anime_grubber::agent::Agent;
-    /// use anime_grubber::agents::vailfupics::{Faifu, Categories, SFW};
+    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let faifu = Faifu::new(Categories::SFW(SFW::Dance));
-    ///     let random_image_url = faifu.get_random().await.expect("Failed to fetch random image");
+    ///     let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
+    ///     let random_image_url = Waifu.get_random().await.expect("Failed to fetch random image");
     ///     println!("Fetched random image URL: {}", random_image_url);
     /// }
     /// ```

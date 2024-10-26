@@ -71,7 +71,7 @@ macro_rules! gen_enum {
             fn from(value: &$name) -> Self {
                 match value {
                     $(
-                        $name::$variant(_) => stringify!($variant),
+                        $name::$variant(value) => value.into(),
                     )*
                 }
             }

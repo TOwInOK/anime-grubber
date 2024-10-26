@@ -9,7 +9,7 @@ use tracing::{debug, info, instrument, trace};
 const SOLO_URL: &str = "https://api.waifu.pics";
 const MANY_URL: &str = "https://api.waifu.pics/many";
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 /// A struct representing an image-fetching agent from the [Waifu.pics API](https://waifu.pics/docs).
 ///
 /// The `Waifu` struct implements the `Agent` trait and provides methods to retrieve

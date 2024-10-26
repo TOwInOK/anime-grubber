@@ -78,11 +78,20 @@
 #[macro_export]
 macro_rules! gen_enum {
     ($name:tt, [ $($variant:ident),* $(,)? ]) => {
-        #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
         pub enum $name {
-            $(
-                $variant,
-            )*
+            $( $variant ),*
+        }
+        impl Default for $name {
+            fn default() -> Self {
+                let mut _single = None;
+                $(
+                    if _single.is_none() {
+                        _single = Some(Self::$variant);
+                    }
+                )*
+                _single.unwrap()
+            }
         }
         impl From<&$name> for &str {
             fn from(value: &$name) -> Self {
@@ -100,11 +109,20 @@ macro_rules! gen_enum {
         }
     };
     ($name:tt, [ $($variant:ident($nested:ty)),* $(,)? ]) => {
-        #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
         pub enum $name {
-            $(
-                $variant($nested),
-            )*
+            $( $variant($nested) ),*
+        }
+        impl Default for $name {
+            fn default() -> Self {
+                let mut _single = None;
+                $(
+                    if _single.is_none() {
+                        _single = Some(Self::$variant(<$nested>::default()));
+                    }
+                )*
+                _single.unwrap()
+            }
         }
         impl From<&$name> for &str {
             fn from(value: &$name) -> Self {

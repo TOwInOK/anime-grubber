@@ -1,3 +1,4 @@
+use reqwest::StatusCode;
 use thiserror::Error;
 /// Represents the errors that can occur in the application.
 ///
@@ -15,6 +16,10 @@ use thiserror::Error;
 pub enum Error {
     #[error("Not found")]
     NotFound,
+    #[error("Too many requsts")]
+    RateLimit,
+    #[error("Request failed with status: {0}")]
+    RequestFailed(StatusCode),
     #[error("Some reqwest trouble")]
     Reqwest(#[from] reqwest::Error),
     #[error("Desirialise error")]

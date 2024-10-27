@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use crate::result::Result;
 use async_trait::async_trait;
 #[async_trait]
@@ -8,80 +10,45 @@ use async_trait::async_trait;
 /// non-blocking operations when retrieving images from a source.
 ///
 /// # Methods
-/// - `get`: Asynchronously retrieves a single image and returns its URL as a `String`.
-/// - `get_many`: Asynchronously retrieves multiple images and returns their URLs as a `Vec<String>`.
-/// - `get_random`: Asynchronously retrieves a random image and returns its URL as a `String`.
+/// - `get`: Asynchronously retrieves a single image and returns its URL as a `Cow<'_, str>`.
+/// - `get_many`: Asynchronously retrieves multiple images and returns their URLs as a `Vec<Cow<'_, str>>`.
+/// - `get_random`: Asynchronously retrieves a random image and returns its URL as a `Cow<'_, str>`.
 ///
 pub trait Agent {
-    /// Asynchronously fetches a single image based on the current category and aspect.
+    /// Retrieves a single image.
     ///
-    /// This method constructs a URL using the category and aspect generated from
-    /// the current state of the `Waifu` instance. It performs an HTTP GET request
-    /// to retrieve the image. If the image is not found, it returns an error.
+    /// Returns image URL as a string reference.
     ///
-    /// # Returns
-    /// Returns a `Result<String>`, containing the URL of the fetched image or an
-    /// error if the request fails.
-    ///
-    /// # Example
-    /// ```rust
-    /// use anime_grubber::agent::Agent;
-    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
-    ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
-    ///     let image_url = Waifu.get().await.expect("Failed to fetch image");
-    ///     println!("Fetched image URL: {}", image_url);
-    /// }
-    /// ```
-    async fn get(&self) -> Result<String>;
-
-    /// Asynchronously fetches multiple images based on the current category and aspect.
-    ///
-    /// This method constructs a URL using the category and aspect generated from
-    /// the current state of the `Waifu` instance. It performs an HTTP POST request
-    /// to retrieve an array of images. If the images are not found, it returns an error.
+    /// # Errors
+    /// Returns error if image cannot be retrieved.
     ///
     /// # Returns
-    /// Returns a `Result<Vec<String>>`, containing a vector of URLs for the fetched
-    /// images or an error if the request fails.
+    /// - `Ok(Cow<'_, str>)` - URL of retrieved image
+    /// - `Err(Error)` - If retrieval fails
+    async fn get(&self) -> Result<ImageUrl<'_>>;
+    /// Retrieves multiple images.
     ///
-    /// # Example
-    /// ```rust
-    /// use anime_grubber::agent::Agent;
-    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
+    /// Returns vector of image URLs.
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
-    ///     let many_images = Waifu.get_many().await.expect("Failed to fetch images");
-    ///     for image_url in many_images {
-    ///         println!("Fetched image URL: {}", image_url);
-    ///     }
-    /// }
-    /// ```
-    async fn get_many(&self) -> Result<Vec<String>>;
-    /// Asynchronously fetches a random image.
-    ///
-    /// This method calls the `get` method to retrieve a random image. It behaves
-    /// the same as `get`, returning a URL of a randomly selected image.
+    /// # Errors
+    /// Returns error if images cannot be retrieved.
     ///
     /// # Returns
-    /// Returns a `Result<String>`, containing the URL of the fetched random image
-    /// or an error if the request fails.
+    /// - `Ok(Vec<Cow<'_, str>>)` - URLs of retrieved images
+    /// - `Err(Error)` - If retrieval fails
+    async fn get_many(&self) -> Result<ImageUrls<'_>>;
+    /// Retrieves a random image.
     ///
-    /// # Example
-    /// ```rust
-    /// use anime_grubber::agent::Agent;
-    /// use anime_grubber::agents::waifu_pics::{Waifu, Categories, SFW};
+    /// Returns URL of random image.
     ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let Waifu = Waifu::new(Categories::SFW(SFW::Dance));
-    ///     let random_image_url = Waifu.get_random().await.expect("Failed to fetch random image");
-    ///     println!("Fetched random image URL: {}", random_image_url);
-    /// }
-    /// ```
-    async fn get_random(&self) -> Result<String>;
+    /// # Errors
+    /// Returns error if image cannot be retrieved.
+    ///
+    /// # Returns
+    /// - `Ok(Cow<'_, str>)` - URL of random image
+    /// - `Err(Error)` - If retrieval fails
+    async fn get_random(&self) -> Result<ImageUrl<'_>>;
 }
+
+pub type ImageUrl<'a> = Cow<'a, str>;
+pub type ImageUrls<'a> = Box<[Cow<'a, str>]>;

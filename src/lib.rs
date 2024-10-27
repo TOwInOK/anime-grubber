@@ -20,5 +20,4 @@ pub mod error;
 pub mod gen_enum;
 pub mod gen_url;
 pub mod result;
-
 pub use crate::{agent::Agent, agents::*, error::Error, result::Result};

@@ -20,4 +20,4 @@ jobs:
       - name: Publish to crates.io
         env:
           CARGO_TOKEN: ${{ secrets.CARGO_TOKEN }}
-        run: cargo publish --token $CARGO_TOKEN
+        run: cargo publish -F full --token $CARGO_TOKEN

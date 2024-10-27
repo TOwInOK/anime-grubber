@@ -8,122 +8,54 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-
   make-cache:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Make Cache
-      uses: Swatinem/rust-cache@v2.7.3
-      with:
-          save-if: true
-          cache-all-crates: true
-          shared-key: tests
-          
-    - name: Update Toolchain
-      run: rustup toolchain install stable --profile minimal --no-self-update
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: cargo build -r
 
-    - name: Job
-      run: cargo build
-       
   Clippy:
-    needs: 
+    needs:
       - make-cache
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Load Cache
-        uses: Swatinem/rust-cache@v2.7.3
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          # save-if: false
-          shared-key: tests
-          key: clippy
-      - name: Update Toolchain
-        run: rustup toolchain install stable --profile minimal --no-self-update
-          
-      - name: Job
-        run: cargo clippy --all-targets   -- -D warnings
-      
+          components: clippy
+          cache: true
+      - run: cargo clippy --features full -- -D warnings
+
   Doc-check:
-    needs: 
+    needs:
       - make-cache
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Load Cache
-        uses: Swatinem/rust-cache@v2.7.3
-        with:
-          # save-if: false
-          shared-key: tests
-          key: doc
-      - name: Update Toolchain
-        run: rustup toolchain install stable --profile minimal --no-self-update
-          
-      - name: Job
-        run: cargo test --doc 
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: cargo test -r --features full
 
-  Lib-check:
-    needs: 
-      - make-cache
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Load Cache
-        uses: Swatinem/rust-cache@v2.7.3
-        with:
-          # save-if: false
-          shared-key: tests
-          key: lib
-      - name: Update Toolchain
-        run: rustup toolchain install stable --profile minimal --no-self-update
-        
-      - name: Job
-        run: cargo test -p anime-grubber --lib  
-
-  Lib-and-Tests-check:
-    needs: 
-      - make-cache
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Load Cache
-        uses: Swatinem/rust-cache@v2.7.3
-        with:
-          # save-if: false
-          shared-key: tests
-          key: lib-test
-      - name: Update Toolchain
-        run: rustup toolchain install stable --profile minimal --no-self-update
-          
-      - name: Job
-        run: cargo test -p anime-grubber tests
   Make-Tag:
-    needs: 
+    needs:
       - Clippy
       - Doc-check
-      - Lib-check
-      - Lib-and-Tests-check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Save version 
+
+      - name: Save version
         run: |
-           version=$(grep '^version =' Cargo.toml | head -n 1 | cut -d '"' -f 2)
-           echo "version=$version" >> $GITHUB_ENV
-           echo "Extracted version: $version"
-           
+          version=$(grep '^version =' Cargo.toml | head -n 1 | cut -d '"' -f 2)
+          echo "version=$version" >> $GITHUB_ENV
+          echo "Extracted version: $version"
+
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
+
       - name: Make tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -135,4 +67,3 @@ jobs:
           fi
           git tag "v$version"
           git push origin "v$version"
-              

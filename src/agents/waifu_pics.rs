@@ -45,6 +45,28 @@ pub struct Waifu {
     pub categorie: Categories,
     client: reqwest::Client,
 }
+impl Default for Waifu {
+    fn default() -> Self {
+        let client = reqwest::Client::builder()
+            .timeout(DEFAULT_TIMEOUT)
+            .pool_idle_timeout(DEFAULT_POOL_IDLE_TIMEOUT)
+            .pool_max_idle_per_host(DEFAULT_POOL_MAX_IDLE)
+            .default_headers({
+                let mut headers = HeaderMap::new();
+                headers.insert(CONTENT_TYPE, HeaderValue::from_static("application/json"));
+                headers
+            })
+            .build()
+            .expect("Failed to create HTTP client");
+        let categorie = Categories::default();
+        Self { categorie, client }
+    }
+}
+impl PartialEq for Waifu {
+    fn eq(&self, other: &Self) -> bool {
+        self.categorie == other.categorie
+    }
+}
 
 impl Waifu {
     /// Creates a new instance of `Waifu` with the specified category.
@@ -110,7 +132,7 @@ impl Agent for Waifu {
         if res.status() == reqwest::StatusCode::NOT_FOUND {
             return Err(Error::NotFound);
         }
-        trace!("Response received: status={}", res.status());
+        debug!("Response received: status={}", res.status());
         trace!("res -> {:#?}", res);
         let res_text = res.text().await?;
 
@@ -139,7 +161,7 @@ impl Agent for Waifu {
                 status => Err(Error::RequestFailed(status)),
             };
         }
-        trace!("Response received: status={}", res.status());
+        debug!("Response received: status={}", res.status());
         trace!("res -> {:#?}", res);
         let res_text = res.text().await?;
         let conveted = json::from_str::<ManyImages>(&res_text)?;
